@@ -48,6 +48,8 @@ def generate_sym_group(n: int):
 if __name__ == "__main__":
     # Unit tests
     # TODO: Move this into pytest
+    print("Running unit tests")
+    print("Testing initialisation, group operation, inverses")
 
     Sym_3 = generate_sym_group(3)
     assert(Sym_3.size == 3)
@@ -76,22 +78,27 @@ if __name__ == "__main__":
     assert(Sym_10.operation(a, Sym_10.Id, False, False) == a)
     assert(Sym_10.operation(a, Sym_10.Id, True, False) == b)
     assert(Sym_10.operation(a, Sym_10.Id, False, True) == a)
-    print(Sym_10.operation(Sym_10.Id, a))
-    print(a)
     assert(Sym_10.operation(Sym_10.Id, a) == a)
 
     c = [0, 2, 3, 4, 5, 8, 7, 6, 9, 1]
 
     # Test cannonisation
-    print("Testing Cannonisation")
-
-    print(Sym_10.canonise(Word([a, b],[False, False])))
-    
+    print("Testing cannonisation")
     assert(Sym_10.canonise(Word([a, b],[False, False])) == Sym_10.Id)
 
-    word_1 = Word([c, a, b], [False, False, False])
-    print(word_1.indecies)
-    assert(Sym_10.inverse(c) == Sym_10.canonise(word_1))
+    word = Word([c, a, b], [True, False, False])
+    assert(Sym_10.inverse(c) == Sym_10.canonise(word))
+    word = Word([c, a, b], [False, False, False])
+    assert(c == Sym_10.canonise(word))
+    word = Word([c, a, b], [True, True, True])
+    assert(Sym_10.inverse(c) == Sym_10.canonise(word))
+    word = Word([a, b, c], [True, True, False])
+    assert(c == Sym_10.canonise(word))
+    word = Word([a, b, c, c, b, b, a], [True, True, False, True, False, False, False])
+    assert(b == Sym_10.canonise(word))
+    
+
+
     #assert(Sym_10.canonise(word_1) == c)
 
 
