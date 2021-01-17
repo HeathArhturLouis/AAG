@@ -46,7 +46,7 @@ class Group(ABC):
         ...
 
     @classmethod
-    def canonise(cls, word: Word):
+    def compute_word(cls, word: Word):
         """Compute canonical form of word (array-like) elements by applying the group operation in sequence"""
         if (len(word) == 0):
             # Empty word equals the identity by convention
@@ -57,12 +57,16 @@ class Group(ABC):
             else:
                 return word.elements[0]
         else:
-            norm_form = cls.operation(word[0], word[1])
-            for i in range(2, len(word[2:])):
+            norm_form = cls.Id
+            for i in range(len(word)):
                 norm_form = cls.operation(norm_form,
-                                        word.elements[i],
-                                        False,
-                                        word.indecies[i])
+                                          word.elements[i],
+                                          b_ind = word.indecies[i])
+        return norm_form
+
+    @abstractclassmethod
+    def canonise(cls, word: Word):
+        ...
 
 
 if __name__ == "__main__":
