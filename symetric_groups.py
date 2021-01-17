@@ -12,6 +12,7 @@ def generate_sym_group(n: int):
         row notation with the index representing the first row and list elements
         the second row.
         """
+        element_t = list
         size = n
         name = "S_" + str(n)
 
@@ -98,4 +99,11 @@ if __name__ == "__main__":
                                         False, True, False, False, False])
     assert(b == Sym_10.canonise(word))
 
-    print("All unit tests passed!")
+    # Test concatenation, inversion of words
+    assert((Word([a, b, c, c], [True, True, False, True])
+            * Word([b, b, a], [False, False, False])) == word)
+
+    assert((~ word).indecies == [False, False, True, False, True, True, True])
+    assert(Sym_10.inverse(Sym_10.canonise(word)) == Sym_10.canonise(~ word))
+
+print("All unit tests passed!")
