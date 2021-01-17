@@ -32,11 +32,11 @@ def generate_sym_group(n: int):
             if(not a_ind):
                 a = cls.inverse(a)
             if(not b_ind):
-                b = cls.inverse(b) 
+                b = cls.inverse(b)
             return [a.index(b.index(i)) for i in range(cls.size)]
 
         @classmethod
-        def canonise(cls, word : Word):
+        def canonise(cls, word: Word):
             """Put word into canonical form
             in this case the product of its symbols in S_n 
             presented in the two line form"""
@@ -57,8 +57,8 @@ if __name__ == "__main__":
     assert(Sym_3.Id == list(range(3)))
     assert(Sym_3.inverse(Sym_3.Id) == Sym_3.Id)
     assert(Sym_3.operation(Sym_3.Id, Sym_3.Id) == Sym_3.Id)
-    assert(Sym_3.operation(Sym_3.Id, [2,1,0]) == [2, 1, 0])
-    assert(Sym_3.operation([2,1,0], Sym_3.Id) == [2, 1, 0])
+    assert(Sym_3.operation(Sym_3.Id, [2, 1, 0]) == [2, 1, 0])
+    assert(Sym_3.operation([2, 1, 0], Sym_3.Id) == [2, 1, 0])
 
     Sym_4 = generate_sym_group(4)
     assert(Sym_4.size == 4)
@@ -84,7 +84,7 @@ if __name__ == "__main__":
 
     # Test cannonisation
     print("Testing cannonisation")
-    assert(Sym_10.canonise(Word([a, b],[False, False])) == Sym_10.Id)
+    assert(Sym_10.canonise(Word([a, b], [False, False])) == Sym_10.Id)
 
     word = Word([c, a, b], [True, False, False])
     assert(Sym_10.inverse(c) == Sym_10.canonise(word))
@@ -94,18 +94,8 @@ if __name__ == "__main__":
     assert(Sym_10.inverse(c) == Sym_10.canonise(word))
     word = Word([a, b, c], [True, True, False])
     assert(c == Sym_10.canonise(word))
-    word = Word([a, b, c, c, b, b, a], [True, True, False, True, False, False, False])
+    word = Word([a, b, c, c, b, b, a], [True, True,
+                                        False, True, False, False, False])
     assert(b == Sym_10.canonise(word))
-    
-
-
-    #assert(Sym_10.canonise(word_1) == c)
-
-
-
-    word_2 = Word([a, b, c], [False, True, False])
-
-    d = []
-    e = []
 
     print("All unit tests passed!")

@@ -61,7 +61,7 @@ class Group(ABC):
             for i in range(len(word)):
                 norm_form = cls.operation(norm_form,
                                           word.elements[i],
-                                          b_ind = word.indecies[i])
+                                          b_ind=word.indecies[i])
         return norm_form
 
     @abstractclassmethod
