@@ -1,3 +1,4 @@
+from __future__ import annotations
 from group import Group, Word
 
 
@@ -8,11 +9,11 @@ def generate_sym_group(n: int):
         Group operations for Symmetric groups of size n
 
         Group elements are expected to be lists of length n containing
-        the integers from 0 to n-1 corresponding to permutations in two 
-        row notation with the index representing the first row and list elements
-        the second row.
+        the integers from 0 to n-1 corresponding to permutations in two
+        row notation with the index representing the first row and list 
+        elements the second row.
         """
-        element_t = list
+        element_t = list[int]
         size = n
         name = "S_" + str(n)
 
@@ -20,15 +21,18 @@ def generate_sym_group(n: int):
         Id = list(range(n))
 
         @classmethod
-        def inverse(cls, a: list[int]) -> list[int]:
-            """ Compute the inverse of a permutation by inverting each cycle """
+        def inverse(cls, a: element_t) -> element_t:
+            """ Compute the inverse of a permutation by inverting each cycle"""
             assert (sorted(a) == cls.Id)
             return [a.index(i) for i in range(cls.size)]
 
         @classmethod
-        def operation(cls, a: list[int], b: list[int], a_ind: bool = False, b_ind: bool = False) -> list[int]:
-            """ Compose two permutations
-            """
+        def operation(cls,
+                      a: element_t,
+                      b: element_t,
+                      a_ind: bool = False,
+                      b_ind: bool = False) -> list[int]:
+            """Compose two permutations"""
             assert (sorted(a) == cls.Id) and (sorted(b) == cls.Id)
             if(not a_ind):
                 a = cls.inverse(a)
@@ -37,9 +41,9 @@ def generate_sym_group(n: int):
             return [a.index(b.index(i)) for i in range(cls.size)]
 
         @classmethod
-        def canonise(cls, word: Word):
+        def canonise(cls, word: Word) -> element_t:
             """Put word into canonical form
-            in this case the product of its symbols in S_n 
+            in this case the product of its symbols in S_n
             presented in the two line form"""
             return cls.compute_word(word)
 
@@ -83,8 +87,8 @@ if __name__ == "__main__":
 
     c = [0, 2, 3, 4, 5, 8, 7, 6, 9, 1]
 
-    # Test cannonisation
-    print("Testing cannonisation")
+    # Test canonization
+    print("Testing canonization")
     assert(Sym_10.canonise(Word([a, b], [False, False])) == Sym_10.Id)
 
     word = Word([c, a, b], [True, False, False])
@@ -106,4 +110,4 @@ if __name__ == "__main__":
     assert((~ word).indecies == [False, False, True, False, True, True, True])
     assert(Sym_10.inverse(Sym_10.canonise(word)) == Sym_10.canonise(~ word))
 
-print("All unit tests passed!")
+    print("All unit tests passed!")
