@@ -10,6 +10,7 @@ class Group(ABC):
     @property
     def element_t(self):
         raise NotImplementedError
+
     """
     The following are methods related to the chosen style of canonisation
     for a secure implementation one should acomplish this differently
@@ -34,10 +35,10 @@ class Group(ABC):
     @classmethod
     def compute_word(cls, word: Word):
         """Compute canonical form of word (array-like) elements by applying the group operation in sequence"""
-        if (len(word) == 0):
+        if len(word) == 0:
             # Empty word equals the identity by convention
             return cls.Id
-        elif (len(word) == 1):
+        elif len(word) == 1:
             if word.indecies[0]:
                 return cls.inverse(word.elements[0])
             else:
@@ -45,9 +46,9 @@ class Group(ABC):
         else:
             norm_form = cls.Id
             for i in range(len(word)):
-                norm_form = cls.operation(norm_form,
-                                          word.elements[i],
-                                          b_ind=word.indecies[i])
+                norm_form = cls.operation(
+                    norm_form, word.elements[i], b_ind=word.indecies[i]
+                )
         return norm_form
 
     @abstractclassmethod
