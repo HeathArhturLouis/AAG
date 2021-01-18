@@ -32,7 +32,8 @@ class Word:
 
     def __invert__(self):
         """Return word with all elements inverted"""
-        return Word(self.elements, [not ind for ind in self.indecies])
+        return Word([e for e in reversed(self.elements)],
+                    [i for i in reversed([not ind for ind in self.indecies])])
 
     def __eq__(self, other):
         """Check equivalence of words (NOT value)"""
@@ -43,7 +44,7 @@ class Word:
     def reduction(self):
         """Remove reducible pairs from word"""
         # Search for reducible pair
-        for i in range(len(self.elements)- 1):
+        for i in range(len(self.elements) - 1):
             if ((self.elements[i] == self.elements[i+1])
                     and (self.indecies[i] != self.indecies[i+1])):
                 # If reducible pair found, remove and call recursively

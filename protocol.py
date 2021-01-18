@@ -16,7 +16,7 @@ def run_base_protocol(data: PublicData, N=10):
              data.subgroup_B,
              data.subgroup_A,
              data.beta,
-             data.gamma_1,
+             data.gamma_2,
              N)
 
     # Generate private keys
@@ -29,7 +29,7 @@ def run_base_protocol(data: PublicData, N=10):
     
     # Compute Secret information
     A.compute_common_secret()
-    B.compute_common_secret()
+    B.compute_common_secret(amend=True)
 
     # Validate
     a = A.get_common_secret()
@@ -56,10 +56,28 @@ if __name__ == "__main__":
     S_4 = [[1, 2, 3, 0, 4],
            [1, 0, 2, 3, 4]]
 
+
+    AG1 = [[1,2,3,4,0], [1,2,0,3,4]]
+    AG2 = [[1,2,0,3,4], [1,0,2,3,4]]
+
     Id = [[0, 1, 2, 3, 4]]
 
     pd = PublicData(Sym_5, S_4, A_5)
     #pd = PublicData(Sym_5, Id, Id)
-    #pd = PublicData(Sym_5, ['a1','a2'], ['b1', 'b2'])
+    #pd = PublicData(Sym_5, ['a1', 'a2'], ['b1', 'b2'])
+    #pd = PublicData(Sym_5, AG2, S_4)
 
-    run_base_protocol(pd, 2)
+    run_base_protocol(pd, 10)
+
+    '''
+    from word import Word
+
+    NA = Word(elements=[[1, 2, 3, 0, 4], [1, 0, 2, 3, 4], [1, 2, 3, 4, 0], [1, 2, 0, 3, 4], [1, 2, 3, 0, 4], [1, 2, 3, 4, 0], [1, 2, 0, 3, 4], [1, 2, 3, 4, 0], [1, 2, 0, 3, 4], [1, 0, 2, 3, 4], [1, 2, 3, 4, 0], [1, 2, 0, 3, 4]], indecies=[True, True, True, True, False, False, False, True, True, False, False, False])
+    NB = Word(elements=[[1, 2, 3, 4, 0], [1, 2, 0, 3, 4], [1, 2, 3, 0, 4], [1, 0, 2, 3, 4], [1, 2, 3, 4, 0], [1, 2, 3, 0, 4], [1, 0, 2, 3, 4], [1, 2, 3, 0, 4], [1, 0, 2, 3, 4], [1, 2, 0, 3, 4], [1, 2, 3, 0, 4], [1, 0, 2, 3, 4]], indecies=[True, True, True, True, False, False, False, True, True, False, False, False])
+
+    print("Firing Lazer")
+    print(Sym_5.canonise(NA))
+    print(Sym_5.canonise(NB))
+    print(Sym_5.canonise(NA * NB))
+    print(Sym_5.canonise(NB * NA))
+    '''

@@ -85,16 +85,16 @@ class User:
         print(self.__secret)
         print(secret)
         # Apply canonization procedure (to arrive at identical bits)
-        secret.reduction()
+        
         if(amend):
-            secret.reduction()
+            self.__secret = ~ self.__secret
 
         if(amend2):
             secret = ~ secret
             # Reverse order of elements
             secret.indecies.reverse()
             secret.elements.reverse()
-            
+
         self.__common_secret = self.group.canonise(secret)
 
     def get_common_secret(self):
