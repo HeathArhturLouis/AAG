@@ -31,6 +31,10 @@ class User:
         # Gamma function required by user
         self.gamma = gamma
 
+        # NOTE: Here, private elements are used to denote data that a user
+        # would wish to keep 'secret' as opposed to private data of the
+        # class.
+
         # Secrete element, received elements
         self.__secret = None
         self.__conj_generators = None
@@ -41,7 +45,7 @@ class User:
         # Parameters to random element generation algorithm
         self.__N = N
 
-    def gen_personal_secret(self) -> Word:
+    def gen_personal_secret(self):
         """Generate secret element
         (expressed as word in self.s_group)"""
         # Create random product of generators and compose into single word
@@ -84,14 +88,14 @@ class User:
             cs = cs * g
         self.__conj_secret = cs
 
-    def compute_common_secret(self, amend: bool = False, amend2=False):
+    def compute_common_secret(self):
         try:
             assert self.__conj_secret is not None
         except AssertionError:
             raise Exception("Elements must be received from ")
         # Compute word representing common secret
         secret = self.gamma(self.__secret, self.__conj_secret)
-        self.__common_secret = self.group.canonise(secret)
+        self.__common_secret = self.group.canonize(secret)
 
     def get_common_secret(self):
         """ Return common secret when computed"""

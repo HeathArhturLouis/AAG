@@ -21,6 +21,25 @@ def generate_sym_group(n: int):
         Id = list(range(n))
 
         @classmethod
+        def compute_word(cls, word: Word):
+            """Compute canonical form of word (array-like) elements by applying the group operation in sequence"""
+            if len(word) == 0:
+                # Empty word equals the identity by convention
+                return cls.Id
+            elif len(word) == 1:
+                if word.indices[0]:
+                    return cls.inverse(word.elements[0])
+                else:
+                    return word.elements[0]
+            else:
+                norm_form = cls.Id
+                for i in range(len(word)):
+                    norm_form = cls.operation(
+                        norm_form, word.elements[i], b_ind=word.indices[i]
+                    )
+            return norm_form
+
+        @classmethod
         def inverse(cls, a: element_t) -> element_t:
             """ Compute the inverse of a permutation by inverting each cycle"""
             assert sorted(a) == cls.Id
@@ -39,7 +58,7 @@ def generate_sym_group(n: int):
             return [a.index(b.index(i)) for i in range(cls.size)]
 
         @classmethod
-        def canonise(cls, word: Word) -> element_t:
+        def canonize(cls, word: Word) -> element_t:
             """Put word into canonical form
             in this case the product of its symbols in S_n
             presented in the two line form"""
@@ -87,18 +106,18 @@ if __name__ == "__main__":
 
     # Test canonization
     print("Testing canonization")
-    assert Sym_10.canonise(Word([a, b], [False, False])) == Sym_10.Id
+    assert Sym_10.canonize(Word([a, b], [False, False])) == Sym_10.Id
 
     word = Word([c, a, b], [True, False, False])
-    assert Sym_10.inverse(c) == Sym_10.canonise(word)
+    assert Sym_10.inverse(c) == Sym_10.canonize(word)
     word = Word([c, a, b], [False, False, False])
-    assert c == Sym_10.canonise(word)
+    assert c == Sym_10.canonize(word)
     word = Word([c, a, b], [True, True, True])
-    assert Sym_10.inverse(c) == Sym_10.canonise(word)
+    assert Sym_10.inverse(c) == Sym_10.canonize(word)
     word = Word([a, b, c], [True, True, False])
-    assert c == Sym_10.canonise(word)
+    assert c == Sym_10.canonize(word)
     word = Word([a, b, c, c, b, b, a], [True, True, False, True, False, False, False])
-    assert b == Sym_10.canonise(word)
+    assert b == Sym_10.canonize(word)
 
     # Test concatenation, inversion of words
     assert (
@@ -106,7 +125,7 @@ if __name__ == "__main__":
         * Word([b, b, a], [False, False, False])
     ) == word
 
-    assert (~word).indecies == [False, False, True, False, True, True, True]
-    assert Sym_10.inverse(Sym_10.canonise(word)) == Sym_10.canonise(~word)
+    assert (~word).indices == [False, False, True, False, True, True, True]
+    assert Sym_10.inverse(Sym_10.canonize(word)) == Sym_10.canonize(~word)
 
     print("All unit tests passed!")

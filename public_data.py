@@ -28,7 +28,7 @@ class PublicData:
 
 if __name__ == "__main__":
     print("Running unit tests")
-    from symetric_groups import generate_sym_group
+    from symmetric_groups import generate_sym_group
 
     Sym_5 = generate_sym_group(5)
 
@@ -59,11 +59,11 @@ if __name__ == "__main__":
     # Test gamma_1 and gamma_2
     assert Sym_5.operation([4, 0, 1, 2, 3], [1, 2, 3, 4, 0]) == Sym_5.Id
 
-    assert Sym_5.canonise(pd.gamma_1(a, b)) == Sym_5.canonise(
+    assert Sym_5.canonize(pd.gamma_1(a, b)) == Sym_5.canonize(
         Word([[1, 2, 3, 4, 0], [1, 2, 3, 4, 0]], [False, False])
     )
 
-    assert Sym_5.canonise(pd.gamma_2(a, b)) == Sym_5.operation(
+    assert Sym_5.canonize(pd.gamma_2(a, b)) == Sym_5.operation(
         [4, 0, 1, 2, 3], [4, 0, 1, 2, 3]
     )
 
