@@ -54,26 +54,3 @@ def run_aag_protocol(data: PublicData, N=10, verbose=False):
     # Return users common secrets
     return [a, b]
 
-
-if __name__ == "__main__":
-    from symmetric_groups import generate_sym_group
-
-    Sym_5 = generate_sym_group(5)
-
-    # Generators for A_5 in S_5
-    A_5 = [[1, 2, 3, 4, 0], [1, 2, 0, 3, 4]]
-
-    # Generators for S_4 in S_5
-    S_4 = [[1, 2, 3, 0, 4], [1, 0, 2, 3, 4]]
-
-    AG1 = [[1, 2, 3, 4, 0], [1, 2, 0, 3, 4]]
-    AG2 = [[1, 2, 0, 3, 4], [1, 0, 2, 3, 4]]
-
-    Id = [[0, 1, 2, 3, 4]]
-
-    # pd = PublicData(Sym_5, S_4, A_5)
-    # pd = PublicData(Sym_5, Id, Id)
-    # pd = PublicData(Sym_5, ['a1', 'a2'], ['b1', 'b2'])
-    pd = PublicData(Sym_5, AG2, S_4)
-
-    run_base_protocol(pd, 3)

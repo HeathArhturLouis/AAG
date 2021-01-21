@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
     # Run protocol and report results
     # Set 100 randomizations for user private key generation
-    common_secrets = run_aag_protocol(data=pd, N=1, verbose=True)
+    common_secrets = run_aag_protocol(data=pd, N=3, verbose=True)
 
     print("#" * delim_size)
     print("User A arrives at common secret: " + str(common_secrets[0]))

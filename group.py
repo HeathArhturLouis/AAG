@@ -17,7 +17,3 @@ class Group(ABC):
     def canonize(cls, word: Word):
         """Put word into some canonical form"""
         ...
-
-
-if __name__ == "__main__":
-    pass

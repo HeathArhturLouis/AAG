@@ -53,7 +53,3 @@ class Word:
                 p_str += "^{-1}"
             p_str += " "
         return p_str
-
-
-if __name__ == "__main__":
-    pass
